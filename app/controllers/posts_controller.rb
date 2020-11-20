@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def new
-    check_logged_in
+    redirect_if_not_logged_in
     @post = Post.new
   end
 
@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    check_logged_in
+    redirect_if_not_logged_in
     @post = Post.find_by_id(params[:id])
   end
 
@@ -25,17 +25,22 @@ class PostsController < ApplicationController
   end
 
   def index
+    redirect_if_not_logged_in
     @posts = Post.order(created_at: :desc)
-    @current_user = User.find_by_id(session[:current_user_id])
+    @current_user = current_user
   end
 
   private
+
+  def redirect_if_not_logged_in
+    redirect_to new_sessions_url if current_user.nil?
+  end
 
   def post_params
     params.require(:post).permit(:message)
   end
 
-  def check_logged_in
-    redirect_to posts_url if session[:current_user_id].nil?
+  def current_user
+    User.find(session[:current_user_id])
   end
 end

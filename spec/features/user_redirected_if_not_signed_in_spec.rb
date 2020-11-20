@@ -9,12 +9,12 @@ feature 'User redirected if not signed in' do
 
   scenario 'User visits /posts/new' do
     visit '/posts/new'
-    expect(current_path).to eq posts_path
+    expect(current_path).to eq new_sessions_path
   end
 
   scenario 'User visits /posts/:id/edit' do
     post_id = Post.find_by(message: "Hello, world!").id
     visit "/posts/#{post_id}/edit"
-    expect(current_path).to eq posts_path
+    expect(current_path).to eq new_sessions_path
   end
 end

@@ -21,19 +21,19 @@ RSpec.describe SessionsController, type: :controller do
     it "Username is not in database: redirects to /sessions/new" do
       post :create, params: { username: "arabekno", password: "makers4L" } 
       expect(response).to have_http_status(302)
-      expect(response).to redirect_to('/sessions/new')
+      expect(response).to redirect_to(new_sessions_path)
     end
     it "Username does not match password: redirects to /sessions/new" do
       post :create, params: { username: "arakno", password: "maker4L" } 
       expect(response).to have_http_status(302)
-      expect(response).to redirect_to('/sessions/new')
+      expect(response).to redirect_to(new_sessions_path)
     end
   end
   
   describe "DELETE /" do
     it "redirects to home page" do
       delete :destroy
-      expect(response).to redirect_to(root_url)
+      expect(response).to redirect_to(new_sessions_path)
     end
   end
 end

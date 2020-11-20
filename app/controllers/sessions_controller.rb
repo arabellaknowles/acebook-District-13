@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
 
     if username_not_recognised?
       flash[:warning] = "The username #{user_params["username"]} does not exist"
-      redirect_to('/sessions/new')
+      redirect_to new_sessions_url
     elsif failed_password_authentication?(user_params["password"])
       flash[:warning] = "Username and password do not match, please try again"
-      redirect_to('/sessions/new')
+      redirect_to new_sessions_url
     else
       session[:current_user_id] = @current_user.id
       redirect_to posts_url
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   def destroy
     session.delete(:current_user_id)
     flash[:notice] = "Successfully signed out"
-    redirect_to root_url
+    redirect_to new_sessions_url
   end
 
   private

@@ -9,7 +9,7 @@ def user_signup(username, email, full_name, password)
 end
 
 def user_login(username, password)
-  click_link "Login"
+  visit "/"
   fill_in "username", with: username
   fill_in "password", with: password
   click_button "Login"

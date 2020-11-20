@@ -1,3 +1,4 @@
+<%= flash[:notice] %>
 <%= flash[:warning]%>
 
 <h1>Login</h1>
@@ -8,3 +9,5 @@
    <%= password_field_tag :password%>
    <%= submit_tag "Login"%>
 <%end%>
+
+<%= link_to new_user_path do %>Sign Up<% end %>

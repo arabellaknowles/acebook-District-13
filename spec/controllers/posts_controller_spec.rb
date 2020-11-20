@@ -11,6 +11,10 @@ RSpec.describe PostsController, type: :controller do
   # Above test fails as user is not logged in
 
   describe "POST /" do
+    before(:each) do
+      PostsController.stub(:check_logged_in).and_return(true)
+    end
+
     it "responds with 200" do
       post :create, params: { post: { message: "Hello, world!" } }
       expect(response).to redirect_to(posts_url)
@@ -29,4 +33,6 @@ RSpec.describe PostsController, type: :controller do
       expect(response).to have_http_status(200)
     end
   end
+
+  # We need to make a test for when the user is logged in, once we understand how to mock this
 end
