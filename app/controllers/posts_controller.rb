@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   def new
+    check_logged_in
     @post = Post.new
   end
 
@@ -9,6 +10,7 @@ class PostsController < ApplicationController
   end
 
   def edit
+    check_logged_in
     @post = Post.find_by_id(params[:id])
   end
 
@@ -31,5 +33,9 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:message)
+  end
+
+  def check_logged_in
+    redirect_to posts_url if session[:current_user_id].nil?
   end
 end
