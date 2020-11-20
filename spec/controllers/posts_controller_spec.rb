@@ -12,7 +12,8 @@ RSpec.describe PostsController, type: :controller do
 
   describe "POST /" do
     before(:each) do
-      PostsController.stub(:check_logged_in).and_return(true)
+      # PostsController.stub(:current_user).and_return(@user = mock('user'))
+      expect_any_instance_of(PostsController).to receive(:current_user).and_return(@user = double('user'))
     end
 
     it "responds with 200" do

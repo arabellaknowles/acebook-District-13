@@ -18,8 +18,8 @@ class PostsController < ApplicationController
     @post = Post.find_by_id(params[:id])
 
     flash[:warning] = "Error: You can only update posts when they are less than 10 minutes old" unless @post.is_less_than_ten_minutes_old?
-    flash[:warning] = "Error: You can only edit your own posts." unless @post.owned_by(session[:current_user_id])
-    @post.update(message: post_params["message"]) if @post.editable?(session[:current_user_id])
+    flash[:warning] = "Error: You can only edit your own posts." unless @post.owned_by(current_user.id)
+    @post.update(message: post_params["message"]) if @post.editable?(current_user.id)
    
     redirect_to posts_url
   end
@@ -41,6 +41,7 @@ class PostsController < ApplicationController
   end
 
   def current_user
-    User.find(session[:current_user_id])
+    @current_user ||= User.find(session[:current_user_id]) if session[:current_user_id]
   end
+
 end
