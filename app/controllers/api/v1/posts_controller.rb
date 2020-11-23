@@ -7,7 +7,7 @@ module Api
         @posts = Post.order(created_at: :desc)
       end
       def show
-        @post = Post.find(params[:id])
+        @post 
       end
       def create
         @post = Post.create(message: post_params["message"], user_id: @current_user.id)
@@ -20,12 +20,19 @@ module Api
       def update
         if @post
           @post.update(post_params) 
-          render json: { message: 'Fact successfully updated' }, status: 200
+          render json: { message: 'Post successfully updated' }, status: 200
         else
-          render error: { error: 'Unable to update fact' }, status: 400
+          render error: { error: 'Unable to update post' }, status: 400
         end
       end
-
+      def destroy
+        if @post
+          @post.destroy
+          render json: { message: 'Fact successfully deleted' }, status: 200
+        else
+          render error: { error: 'Unable to delete post' }, status: 400
+        end
+      end
 
       private 
 
