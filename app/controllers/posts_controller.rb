@@ -32,6 +32,10 @@ class PostsController < ApplicationController
     @current_user = User.find_by_id(session[:current_user_id])
   end
 
+  def show
+    @post = Post.find(params[:id])
+  end
+
   private
 
   def post_params
