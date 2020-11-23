@@ -10,10 +10,10 @@ class Post < ApplicationRecord
     end
 
     def editable?(current_user_id)
-      owned_by(current_user_id) && is_less_than_ten_minutes_old?
+      owned_by?(current_user_id) && is_less_than_ten_minutes_old?
     end
 
-    def owned_by(current_user_id)
+    def owned_by?(current_user_id)
       current_user_id == self.user_id
     end
 

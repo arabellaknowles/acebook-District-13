@@ -27,4 +27,12 @@ RSpec.describe PostsController, type: :controller do
       expect(response).to have_http_status(200)
     end
   end
+
+  describe "DELETE /" do
+    it "redirects to home page" do
+      post :create, params: { post: { message: "Hello, world!"} } 
+      delete :destroy, params: { id: 1 }
+      expect(response).to redirect_to(posts_url)
+    end
+  end
 end
