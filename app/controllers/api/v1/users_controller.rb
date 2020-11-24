@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < ApiController
-
+      
       def new
         @user = User.new
       end
@@ -20,13 +20,18 @@ module Api
         else
           @user = User.create(user_params)
           session[:current_user_id] = @user.id
+          render json: @user
         end
       end
 
       private
 
       def user_params
-        params.require(:user).permit(:username, :full_name, :email, :password)
+        params.require(:username)
+        params.require(:email)
+        params.require(:password)
+        params.require(:full_name)
+        params.permit(:username, :full_name, :email, :password)
       end
     end
   end
