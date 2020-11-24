@@ -20,7 +20,7 @@ module Api
         else
           @user = User.create(user_params)
           session[:current_user_id] = @user.id
-          render json: @user
+          render json: session[:current_user_id]
         end
       end
 
