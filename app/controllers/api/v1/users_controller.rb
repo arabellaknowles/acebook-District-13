@@ -10,7 +10,7 @@ module Api
         elsif User.username_in_use?(user_params["username"])
           render error: { error: 'Username in use' }, status: 400
         elsif !User.valid_email?(user_params["email"])
-          render error: { error: 'Email invalid' }, status: 400    
+          render json: {error: 'Email invalid'}, status: 500
         elsif !User.valid_password?(user_params["password"])
           render error: { error: 'Password invalid' }, status: 400
         else
