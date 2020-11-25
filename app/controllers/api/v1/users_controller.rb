@@ -1,10 +1,6 @@
 module Api
   module V1
     class UsersController < ApiController
-      
-      def new
-        @user = User.new
-      end
 
       def create 
         if User.email_and_username_in_use?(user_params["username"], user_params["email"])
@@ -20,7 +16,7 @@ module Api
         else
           @user = User.create(user_params)
           session[:current_user_id] = @user.id
-          render json: session[:current_user_id]
+          render json: session[:current_user_id], status: 201
         end
       end
 
