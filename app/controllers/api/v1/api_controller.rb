@@ -7,18 +7,17 @@ module Api
 
       def check_basic_auth
         p session[:current_user_id]
-        if session[:current_user_id].nil?
+        if !!session[:current_user_id]
+          @current_user = User.find(session[:current_user_id])
+        else
           head :unauthorized
           return
-        else
-          @current_user = User.find(session[:current_user_id])
         end
       end
 
       def current_user
         @current_user
       end
-
     end
   end
 end

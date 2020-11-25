@@ -7,3 +7,5 @@ json.user do
 end
 json.message post.message
 json.created_at post.created_at
+json.editable post.editable?(@current_user.id)
+json.owned_by post.owned_by?(@current_user.id)
