@@ -4,15 +4,15 @@ module Api
 
       def create 
         if User.email_and_username_in_use?(user_params["username"], user_params["email"])
-          render error: { error: 'Username and email in use' }, status: 400
+          render json: { error: 'Username and email in use' }, status: 500
         elsif User.email_in_use?(user_params["email"])
-          render error: { error: 'Email in use' }, status: 400
+          render json: { error: 'Email in use' }, status: 500
         elsif User.username_in_use?(user_params["username"])
-          render error: { error: 'Username in use' }, status: 400
+          render json: { error: 'Username in use' }, status: 500
         elsif !User.valid_email?(user_params["email"])
-          render json: {error: 'Email invalid'}, status: 500
+          render json: { error: 'Email invalid'}, status: 500
         elsif !User.valid_password?(user_params["password"])
-          render error: { error: 'Password invalid' }, status: 400
+          render json: { error: 'Password invalid' }, status: 500
         else
           @user = User.create(user_params)
           session[:current_user_id] = @user.id
