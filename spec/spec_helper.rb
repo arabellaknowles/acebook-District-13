@@ -18,6 +18,8 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require_relative './spec_helpers/user_spec_helper.rb'
 require_relative './spec_helpers/create_post_spec_helper.rb'
+require_relative './api/v1/controller_helper.rb'
+
 RSpec.configure do |config|
   puts "TO SEE TEST COVERAGE OPEN coverage/index.html"
   # rspec-expectations config goes here. You can use an alternate
