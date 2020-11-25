@@ -6,17 +6,12 @@ module Api
       private
 
       def check_basic_auth
-        unless request.authorization.present?
+        p session[:current_user_id]
+        if session[:current_user_id].nil?
           head :unauthorized
           return
-        end
-        authenticate_with_http_basic do |username, password|
-          user = User.find_by(username: username)
-          if user && user.authenticate(password)
-            @current_user = user
-          else
-            head :unauthorized
-          end
+        else
+          @current_user = User.find(session[:current_user_id])
         end
       end
 

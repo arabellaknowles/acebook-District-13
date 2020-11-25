@@ -16,7 +16,7 @@ module Api
         else
           @user = User.create(user_params)
           session[:current_user_id] = @user.id
-          render json: session[:current_user_id], status: 201
+          render json: true, status: 201
         end
       end
 
