@@ -13,7 +13,7 @@ module Api
       end
 
       def create
-        @post = Post.create(message: post_params["message"], user_id: @current_user["id"])
+        @post = Post.create(message: post_params["message"], user_id: current_user.id)
         if @post
           render json: @post
         else
