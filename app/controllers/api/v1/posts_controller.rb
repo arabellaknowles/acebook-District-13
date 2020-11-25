@@ -1,7 +1,9 @@
 module Api
   module V1
     class PostsController < ApiController
-      before_action :check_basic_auth, :find_post
+      before_action :check_basic_auth
+      before_action :find_post, only: [:show, :update, :destroy]
+
 
       def index
         @posts = Post.order(created_at: :desc)
