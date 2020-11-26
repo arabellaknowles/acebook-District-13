@@ -9,8 +9,11 @@ module Api
         elsif failed_password_authentication?(user_params["password"])
           render error: { error: "Username and password do not match, please try again" }, status: 400
         else
-          session[:current_user_id] = @user.id
-          render json: true, status: 201
+          render json: {
+            valid: true,
+            user: {id: @user.id, username: @user.username},
+            token: issue_token(@user)
+          }, status: 201
         end
       end
 

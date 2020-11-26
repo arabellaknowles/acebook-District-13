@@ -1,7 +1,7 @@
 module Api
   module V1
     class PostsController < ApiController
-      before_action :check_basic_auth
+      before_action :authorize
       before_action :find_post, only: [:show, :update, :destroy]
 
       def index
