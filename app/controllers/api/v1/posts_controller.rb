@@ -1,12 +1,15 @@
 module Api
   module V1
     class PostsController < ApiController
-      before_action :authorize
       before_action :find_post, only: [:show, :update, :destroy]
 
       def index
         @posts = Post.order(created_at: :desc)
         @user = current_user
+        p 'index-user'
+        p @user
+        p 'index-current-user'
+        p current_user
         # this is required for the tests but for production: @current_user could be used in views
         render('/api/v1/posts/index.json.jbuilder')
       end
