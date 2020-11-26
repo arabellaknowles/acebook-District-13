@@ -26,6 +26,8 @@ RSpec.describe Api::V1::PostsController do
     it 'returns a created status' do
       expect(response).to have_http_status(:created)
     end
+
+    # renders error test - look at delete test for more info
   end
 
   context "Users and posts created before" do
@@ -71,8 +73,19 @@ RSpec.describe Api::V1::PostsController do
         json = JSON.parse(response.body)
         expect(json['message']).to eq 'Post successfully deleted'
       end
+
+      it 'throws error when trying to delete a post that does not exist' do
+        delete '/api/v1/posts/8'
+        expect(response).to have_http_status(:error)
+        json = JSON.parse(response.body)
+        expect(json['message']).to eq 'Unable to delete post'
+        # failing: ActiveRecord::RecordNotFound:Couldn't find Post with 'id'=8, find_post method
+        # does find_post use user id to find the post? 
+      end
       
     end
+
+    # need to do test for update
   end
 
 end
