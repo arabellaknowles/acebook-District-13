@@ -16,7 +16,7 @@ module Acebook
          origins 'localhost:3000'
          resource '*', 
                     :headers => :any, 
-                    :methods => [:get, :post, :options, :delete], 
+                    :methods => [:get, :post, :options, :delete, :put], 
                     :credentials => true
        end
     end
