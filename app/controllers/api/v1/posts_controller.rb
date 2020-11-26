@@ -4,8 +4,13 @@ module Api
       before_action :find_post, only: [:show, :update, :destroy]
 
       def index
-        @user = current_user
+        if logged_in?
+          @user_id = current_user.id
+        else
+          @user_id = nil
+        end
         @posts = Post.order(created_at: :desc)
+        p @posts
         render('/api/v1/posts/index.json.jbuilder')
       end
 
@@ -25,7 +30,7 @@ module Api
       end
 
       def update
-        if @post
+        if @post.editable?(current_user.id)
           @post.update(post_params) 
           render json: { message: 'Post successfully updated' }, status: 200
         else
@@ -34,7 +39,7 @@ module Api
       end
       
       def destroy
-        if @post
+        if @post.owned_by?(current_user.id)
           @post.destroy
           render json: { message: 'Post successfully deleted' }, status: 200
         else
