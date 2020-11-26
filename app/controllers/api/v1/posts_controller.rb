@@ -29,20 +29,20 @@ module Api
       end
 
       def update
-        if @post
+        if @post.editable?(current_user.id)
           @post.update(post_params) 
           render json: { message: 'Post successfully updated' }, status: 200
         else
-          render error: { error: 'Unable to update post' }, status: 400
+          render json: { error: 'Unable to update post' }, status: 500
         end
       end
       
       def destroy
-        if @post
+        if @post.owned_by?(current_user.id)
           @post.destroy
           render json: { message: 'Post successfully deleted' }, status: 200
         else
-          render error: { error: 'Unable to delete post' }, status: 400
+          render json: { error: 'Unable to delete post' }, status: 500
         end
       end
 
