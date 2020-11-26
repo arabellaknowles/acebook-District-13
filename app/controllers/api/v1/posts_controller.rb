@@ -39,6 +39,8 @@ module Api
       end
       
       def destroy
+        p @post
+        p current_user.id
         if @post.owned_by?(current_user.id)
           @post.destroy
           render json: { message: 'Post successfully deleted' }, status: 200
