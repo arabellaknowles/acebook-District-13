@@ -6,10 +6,17 @@ module Api
 
       def index
         @posts = Post.order(created_at: :desc)
+        @user = current_user
+        # this is required for the tests but for production: @current_user could be used in views
+        render('/api/v1/posts/index.json.jbuilder')
       end
 
       def show
         @post 
+        @user = current_user
+        # by assigning @user to current_user - enables test to stub current user method and that
+        # user to then be used in the json builder views
+        render('/api/v1/posts/show.json.jbuilder')
       end
 
       def create
