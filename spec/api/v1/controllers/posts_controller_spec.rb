@@ -14,18 +14,22 @@ RSpec.describe Api::V1::PostsController do
   end
 
   describe "POST #create" do
-    before do 
-      post '/api/v1/posts', params: { message: "hello" }
-    end
+    
 
-    it 'returns the post' do
+    it 'successfully creates a post' do
+      post '/api/v1/posts', params: { message: "hello" }
+      expect(response).to have_http_status(:created)
       json = JSON.parse(response.body)
       expect(json["message"]).to eq("hello")
     end
 
-    it 'returns a created status' do
-      expect(response).to have_http_status(:created)
-    end
+    # it 'renders an error if a post is not created' do
+    #   @current_user = nil
+    #   post '/api/v1/posts', params: { message: 'this message should not be created' }
+    #   expect(response).to have_http_status(:error)
+    #   json = JSON.parse(response.body)
+    #   expect(json["error"]).to eq("Unable to create post.")
+    # end
 
     # renders error test - look at delete test for more info
   end
