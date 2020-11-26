@@ -40,7 +40,7 @@ module Api
       def destroy
         if @post
           @post.destroy
-          render json: { message: 'Fact successfully deleted' }, status: 200
+          render json: { message: 'Post successfully deleted' }, status: 200
         else
           render error: { error: 'Unable to delete post' }, status: 400
         end
