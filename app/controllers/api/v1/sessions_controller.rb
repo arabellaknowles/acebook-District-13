@@ -5,9 +5,9 @@ module Api
         @user = User.find_by_username(user_params["username"])
 
         if username_not_recognised?
-          render error: { error: "The username #{user_params['username']} does not exist" }, status: 400
+          render json: { error: "The username #{user_params['username']} does not exist" }, status: 500
         elsif failed_password_authentication?(user_params["password"])
-          render error: { error: "Username and password do not match, please try again" }, status: 400
+          render json: { error: "Username and password do not match, please try again" }, status: 500
         else
           session[:current_user_id] = @user.id
           render json: true, status: 201
@@ -15,10 +15,12 @@ module Api
       end
 
       def destroy 
-        p session[:current_user_id]
-        session.delete(:current_user_id)
-        p session[:current_user_id]
-        head :no_content
+        if !session[:current_user_id]
+          render json: { error: "You are not signed in"}, status: 500
+        else
+          session.delete(:current_user_id)
+          render json: { message: 'Successfully logged out'}, status: 200
+        end
       end
 
       private

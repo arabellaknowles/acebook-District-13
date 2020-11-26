@@ -90,7 +90,6 @@ RSpec.describe Api::V1::PostsController do
         patch '/api/v1/posts/1', params: { message: "Successfully updated message " }
         expect(response).to have_http_status(200)
         json = JSON.parse(response.body)
-        p json
         expect(json['message']).to eq 'Post successfully updated'
       end
 
