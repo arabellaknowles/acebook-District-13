@@ -4,6 +4,8 @@ SimpleCov.start 'rails' do
   add_filter "/app/channels/"
   add_filter "/app/jobs/"
   add_filter "/app/mailers/"
+  add_filter "/app/serializers/"
+  add_filter "/app/controllers/api/v1/api_controller"
 end
 SimpleCov.minimum_coverage 100
 ENV['RAILS_ENV'] ||= 'test'
