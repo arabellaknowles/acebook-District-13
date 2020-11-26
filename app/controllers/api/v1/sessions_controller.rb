@@ -17,10 +17,16 @@ module Api
         end
       end
 
+      def authorize
+        if logged_in? 
+          render json: { valid: true }, status: 200
+        else
+          render json: { valid: false }, status: 401
+        end
+      end
+
       def destroy 
-        p session[:current_user_id]
         session.delete(:current_user_id)
-        p session[:current_user_id]
         head :no_content
       end
 

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :posts, only: [:index, :create, :update, :destroy, :show]
       resources :users, only: [:create]
-      resource :sessions, only: [:create, :destroy]
+      resource :sessions, only: [:create, :destroy, :authorize]
     end
   end
 end
