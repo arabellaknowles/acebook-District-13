@@ -15,8 +15,11 @@ module Api
           render json: { error: 'Password invalid' }, status: 500
         else
           @user = User.create(user_params)
-          session[:current_user_id] = @user.id
-          render json: true, status: 201
+          render json: {
+            valid: true,
+            user: {id: @user.id, username: @user.username},
+            token: issue_token(@user)
+          }, status: 201
         end
       end
 

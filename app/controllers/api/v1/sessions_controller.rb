@@ -9,17 +9,23 @@ module Api
         elsif failed_password_authentication?(user_params["password"])
           render json: { error: "Username and password do not match, please try again" }, status: 500
         else
-          session[:current_user_id] = @user.id
-          render json: true, status: 201
+          render json: {
+            valid: true,
+            user: {id: @user.id, username: @user.username},
+            token: issue_token(@user)
+          }, status: 201
         end
       end
 
       def destroy 
-        if !session[:current_user_id]
-          render json: { error: "You are not signed in"}, status: 500
+
+      end
+
+      def authorize
+        if logged_in? 
+          render json: { valid: true }, status: 200
         else
-          session.delete(:current_user_id)
-          render json: { message: 'Successfully logged out'}, status: 200
+          render json: { valid: false }, status: 401
         end
       end
 

@@ -13,8 +13,11 @@ module Acebook
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-         origins '*'
-         resource '*', :headers => :any, :methods => [:get, :post, :options]
+         origins 'localhost:3000'
+         resource '*', 
+                    :headers => :any, 
+                    :methods => [:get, :post, :options, :delete, :put], 
+                    :credentials => true
        end
     end
 
