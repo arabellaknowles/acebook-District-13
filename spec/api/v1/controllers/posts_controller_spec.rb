@@ -9,7 +9,7 @@ RSpec.describe Api::V1::PostsController do
     password: "adoggle",
     id: 1)  
 
-    allow_any_instance_of(Api::V1::PostsController).to receive(:check_basic_auth).and_return(post_user)
+    
     allow_any_instance_of(Api::V1::PostsController).to receive(:current_user).and_return(post_user)
   end
 

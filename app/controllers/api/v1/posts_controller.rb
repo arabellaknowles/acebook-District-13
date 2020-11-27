@@ -10,7 +10,6 @@ module Api
           @user_id = nil
         end
         @posts = Post.order(created_at: :desc)
-        p @posts
         render('/api/v1/posts/index.json.jbuilder')
       end
 

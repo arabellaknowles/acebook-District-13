@@ -17,7 +17,7 @@ RSpec.describe Api::V1::SessionsController do
       post '/api/v1/sessions', params: { username: 'camlogie', password: 'password' }
       expect(response).to have_http_status(:created)
       json = JSON.parse(response.body)
-      expect(json).to eq true
+      expect(json["valid"]).to eq true
     end
 
     it 'returns an error when an unrecognized username is provided by the user' do
@@ -32,25 +32,6 @@ RSpec.describe Api::V1::SessionsController do
       expect(response).to have_http_status(:error)
       json = JSON.parse(response.body)
       expect(json["error"]).to eq "Username and password do not match, please try again"
-    end
-
-  end
-
-  describe 'Sessions#Destroy' do
-    
-    it 'returns a successful message when the session is deleted' do 
-      post '/api/v1/sessions', params: { username: 'camlogie', password: 'password' }
-      delete '/api/v1/sessions'
-      expect(response).to have_http_status(200) 
-      json = JSON.parse(response.body)
-      expect(json["message"]).to eq "Successfully logged out"
-    end
-
-    it 'returns an error when trying to delete a session that was never created' do
-      delete '/api/v1/sessions' 
-      expect(response).to have_http_status(500)
-      json = JSON.parse(response.body)
-      expect(json["error"]).to eq "You are not signed in"
     end
 
   end
