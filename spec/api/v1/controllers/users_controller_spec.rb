@@ -10,7 +10,8 @@ RSpec.describe Api::V1::UsersController do
       end
 
       it 'returns true' do
-        expect(JSON.parse(response.body)).to eq(true)
+        json = JSON.parse(response.body)
+        expect(json['valid']).to eq(true)
       end
 
       it 'returns a created status' do

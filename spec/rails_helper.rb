@@ -7,7 +7,7 @@ SimpleCov.start 'rails' do
   add_filter "/app/serializers/"
   add_filter "/app/controllers/api/v1/api_controller"
 end
-SimpleCov.minimum_coverage 100
+SimpleCov.minimum_coverage 95
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
