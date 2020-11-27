@@ -6,8 +6,7 @@ module Api
       private
 
       def jwt_key
-        #ENV['SESSION_SECRET']
-        'sXkK4FOPCtNfwzJHHowWpF6lwB5TdQHE'
+        ENV['SESSION_SECRET']
       end
 
       def issue_token(user)
