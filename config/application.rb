@@ -13,7 +13,7 @@ module Acebook
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-         origins 'https://acebook-frontend-six.vercel.app/'
+         origins 'https://acebook-frontend-six.vercel.app'
          resource '*', 
                     :headers => :any, 
                     :methods => [:get, :post, :options, :delete, :put], 
