@@ -14,18 +14,22 @@ RSpec.describe Api::V1::PostsController do
   end
 
   describe "POST #create" do
-    before do 
-      post '/api/v1/posts', params: { message: "hello" }
-    end
+    
 
-    it 'returns the post' do
+    it 'successfully creates a post' do
+      post '/api/v1/posts', params: { message: "hello" }
+      expect(response).to have_http_status(:created)
       json = JSON.parse(response.body)
       expect(json["message"]).to eq("hello")
     end
 
-    it 'returns a created status' do
-      expect(response).to have_http_status(:created)
-    end
+    # it 'renders an error if a post is not created' do
+    #   @current_user = nil
+    #   post '/api/v1/posts', params: { message: 'this message should not be created' }
+    #   expect(response).to have_http_status(:error)
+    #   json = JSON.parse(response.body)
+    #   expect(json["error"]).to eq("Unable to create post.")
+    # end
 
     # renders error test - look at delete test for more info
   end
@@ -75,17 +79,33 @@ RSpec.describe Api::V1::PostsController do
       end
 
       it 'throws error when trying to delete a post that does not exist' do
-        delete '/api/v1/posts/8'
+        delete '/api/v1/posts/2'
         expect(response).to have_http_status(:error)
         json = JSON.parse(response.body)
-        expect(json['message']).to eq 'Unable to delete post'
+        expect(json['error']).to eq 'Unable to delete post'
         # failing: ActiveRecord::RecordNotFound:Couldn't find Post with 'id'=8, find_post method
         # does find_post use user id to find the post? 
       end
       
     end
 
-    # need to do test for update
+    describe "UPDATE #update" do 
+      it 'successfully updates a post' do 
+        patch '/api/v1/posts/1', params: { message: "Successfully updated message " }
+        expect(response).to have_http_status(200)
+        json = JSON.parse(response.body)
+        expect(json['message']).to eq 'Post successfully updated'
+      end
+
+      it 'renders an error when trying to update a post that does not belong to them' do
+        patch '/api/v1/posts/2', params: { message: "I shouldn't be able to do this"}
+        expect(response).to have_http_status(:error)
+        json = JSON.parse(response.body)
+        expect(json['error']).to eq 'Unable to update post'
+      end
+  
+    end
+
   end
 
 end

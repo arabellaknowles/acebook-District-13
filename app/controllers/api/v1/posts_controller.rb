@@ -22,11 +22,7 @@ module Api
 
       def create
         @post = Post.create(message: post_params["message"], user_id: current_user.id)
-        if @post
           render json: @post, status: 201
-        else
-          render error: { error: 'Unable to create post.' }, status: 400
-        end
       end
 
       def update
@@ -34,7 +30,7 @@ module Api
           @post.update(post_params) 
           render json: { message: 'Post successfully updated' }, status: 200
         else
-          render error: { error: 'Unable to update post' }, status: 400
+          render json: { error: 'Unable to update post' }, status: 500
         end
       end
       
@@ -43,7 +39,7 @@ module Api
           @post.destroy
           render json: { message: 'Post successfully deleted' }, status: 200
         else
-          render error: { error: 'Unable to delete post' }, status: 400
+          render json: { error: 'Unable to delete post' }, status: 500
         end
       end
 
